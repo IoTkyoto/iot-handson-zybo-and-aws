@@ -8,16 +8,18 @@ import boto3
 from datetime import datetime
 from botocore.exceptions import ClientError
 
-# 定数
 REKOGNITION_CLIENT = boto3.client('rekognition')
+# Rekognitionで作成したコレクション名を入れてください
+COLLECTION_ID = '{collection_id}'
+# Rekognitionで一度に検出したい顔の最大数（最大4096人まで可）
+MAX_FACES = 10
 
 class Rekognition():
      def __init__(self):
           self.required_keys: list
           self.rekognition_client = REKOGNITION_CLIENT
-          self.collection_id = '{collection_id}'
-          # Rekognitionで一度に検出する顔の最大数。最大4096人まで可
-          self.max_faces = 10
+          self.collection_id = COLLECTION_ID
+          self.max_faces = MAX_FACES
 
      def convert_to_float(self, data) -> float:
           """
@@ -137,7 +139,7 @@ def make_response(status_code: int, msg: str, payloads: dict = None):
 #　初期化
 rekognition = Rekognition()
 
-def search_post(event, _):
+def lambda_handler(event, _):
      """
      /searchに対するPOSTをトリガーに実行
      """
