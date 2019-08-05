@@ -87,9 +87,13 @@ class AnalyzeFaces():
           """
           if str_json is None:
                return self.make_response(400, '[FAILED]Data required')
-          # キー名がシングルクォーテーションで囲まれた場合jsonを変換できないのでreplaceする
-          str_json = str_json.replace('\'', '"')
-          return json.loads(str_json)
+          # Lambdaテスト時にdict型で入ってくるためif分岐
+          if isinstance(str_json, str):
+               # キー名がシングルクォーテーションで囲まれた場合jsonを変換できないためダブルクォーテーションに変換
+               str_json = str_json.replace('\'', '"')
+               return json.loads(str_json)
+          else:
+               return str_json
 
 
      def make_response(self, status_code: int, msg: str, payloads: dict = None):
