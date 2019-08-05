@@ -16,10 +16,17 @@ import boto3
 import botocore
 from botocore.exceptions import ClientError
 import gc
+import subprocess
 
 # ----- 定数 -----
 DATA_NOW = dt.now()
 TIMESTAMP = str(DATA_NOW.strftime('_%Y%m%d%H%M%S')) #日本時間
+
+# ステップ2で構築するプログラムのパス
+# EXECUTE_AUTHENTICATION_PATH = '../step2/execute_authentication_api.py'
+
+# ステップ3で構築するプログラムのパス
+# EXECUTE_ANALYSIS_PATH = '../step3/execute_analysis_api.py'
 
 # ----- 変数(グローバル) -----
 args = sys.argv                 # コマンドライン引数用
@@ -28,7 +35,7 @@ filepath = args[1]              # あげる画像のファイルパス
 # ----- クラス -----
 class Relation_s3:
     # 変数
-    bucketname = ""               # S3にアップロード時の名前
+    filename = ""               # S3にアップロード時の名前
     s3 = None
     bucket = None
 
@@ -40,13 +47,13 @@ class Relation_s3:
         # ファイル名の拡張子前後で分ける
         current_file_name, extension = os.path.splitext(filename)
         # ファイル名の後にタイムスタンプを追記しその後に拡張子が来るようにする
-        relation_s3.bucketname = current_file_name + TIMESTAMP + extension
+        relation_s3.filename = current_file_name + TIMESTAMP + extension
 
     # S3に画像をあげる
     def upload(self):
         try:
             # S3にあげる(第一引数: あげるファイルパス(コマンドライン引数), 第二引数: S3に作られるファイル名)
-            relation_s3.bucket.upload_file(filepath, relation_s3.bucketname)
+            relation_s3.bucket.upload_file(filepath, relation_s3.filename)
         except FileNotFoundError:
             print('[file not found]')
         except boto3.exceptions.S3UploadFailedError as e:
@@ -84,9 +91,15 @@ if __name__ == '__main__':
         print(e)
 
     # アップロード時のファイル名を表示
-    print("upload file name: " + str(relation_s3.bucketname))
+    print("upload file name: " + str(relation_s3.filename))
 
     print("")
+
+    # ステップ2で構築するプログラムをcallする
+    # subprocess.call(["python", EXECUTE_AUTHENTICATION_PATH, relation_s3.filename, args[2], '60'])
+
+    # ステップ3で構築するプログラムをcallする
+    # subprocess.call(["python", EXECUTE_ANALYSIS_PATH, relation_s3.filename, args[2]])
 
     # メモリ解放
     del relation_s3

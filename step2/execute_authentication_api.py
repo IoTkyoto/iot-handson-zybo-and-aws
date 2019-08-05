@@ -24,7 +24,7 @@ RESOURCE = 'xxxxxx'
 BASE_URL = 'https://{api_id}.execute-api.ap-northeast-1.amazonaws.com/{stage}/{resource}'
 
 # step4で作成するログ送信用プログラムのパス
-PUB_AUTH_LOG_PATH = '../step4/pub_auth_log_data.py' 
+# PUB_AUTH_LOG_PATH = '../step4/pub_auth_log_data.py' 
 class Api():
      def __init__(self):
           self.api_key = API_KEY
