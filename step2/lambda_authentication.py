@@ -104,9 +104,13 @@ class Rekognition():
           """
           if str_json is None:
                return make_response(400, '[FAILED]Data required')
-          # キー名がシングルクォーテーションで囲まれた場合jsonを変換できないのでreplaceする
-          str_json = str_json.replace('\'', '"')
-          return json.loads(str_json)
+          # Lambdaテスト時にdict型で入ってくるためif分岐
+          if isinstance(str_json, str):
+               # キー名がシングルクォーテーションで囲まれた場合jsonを変換できないためダブルクォーテーションに変換
+               str_json = str_json.replace('\'', '"')
+               return json.loads(str_json)
+          else:
+               return str_json
 
      def search_post(self, event):
           self.required_keys = ['bucket_name', 'file_name', 'threshold']
