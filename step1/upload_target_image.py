@@ -40,8 +40,8 @@ class Relation_s3:
     bucket = None
 
     # 関数
-    # アップロードする時の名前
-    def upload_name(self):
+    # アップロードする時の名前の作成
+    def create_upload_name(self):
         # ディレクトリ名とファイル名を分ける
         directory, filename = os.path.split(filepath)
         # ファイル名の拡張子前後で分ける
@@ -54,18 +54,19 @@ class Relation_s3:
         try:
             # S3にあげる(第一引数: あげるファイルパス(コマンドライン引数), 第二引数: S3に作られるファイル名)
             relation_s3.bucket.upload_file(filepath, relation_s3.filename)
-        except FileNotFoundError:
-            print('[file not found]')
+        except FileNotFoundError as e:
+            print('[file not found]' + str(e))
         except boto3.exceptions.S3UploadFailedError as e:
             print('[upload failed]' + str(e))    
         except Exception as e:
             print('[error]' + str(e))  
         else:
-            print('succeeded!')
+            # アップロード時のファイル名を表示
+            print('[succeeded!] upload file name: ' + str(relation_s3.filename))
 
-    # クレデンシャル 
-    def credentials(self):
-        # リソース指定(クレデンシャル)
+    # S3リソース指定 
+    def create_resource(self):
+        # リソース指定
         relation_s3.s3 = boto3.resource('s3')
         # S3のバケット名指定(args[2]: コマンドライン引数で第二引数として渡した名前)
         relation_s3.bucket = relation_s3.s3.Bucket(args[2])
@@ -76,24 +77,14 @@ if __name__ == '__main__':
     # クラスのコンストラクタ
     relation_s3 = Relation_s3()
 
-    print("")
+    # S3にアップロードする時の名前の作成
+    relation_s3.create_upload_name()
 
-    # S3にアップロードする時の名前
-    relation_s3.upload_name()
+    # S3リソース指定
+    relation_s3.create_resource()
 
-    # リソース指定(クレデンシャル)
-    relation_s3.credentials()
-
-    # S3に画像をあげる
-    try:
-        relation_s3.upload()
-    except Exception as e:
-        print(e)
-
-    # アップロード時のファイル名を表示
-    print("upload file name: " + str(relation_s3.filename))
-
-    print("")
+    # S3に画像をアップロードする
+    relation_s3.upload()
 
     # ステップ2で構築するプログラムをcallする
     # subprocess.call(["python", EXECUTE_AUTHENTICATION_PATH, relation_s3.filename, args[2], '60'])
