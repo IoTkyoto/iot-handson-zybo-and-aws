@@ -8,7 +8,8 @@ Rekognitionで顔の判別をするAPIにアクセスするコード
 import sys
 import urllib.request
 import json
-import rekognition_data_formatter
+import ssl #認証方法をTLSv1に指定
+# import rekognition_data_formatter
 import subprocess
 
 # このファイルを実行時に受け取る引数
@@ -89,13 +90,15 @@ class Api():
           """
           urllib.requestモジュールで指定のURLにデータをPOSTする
           """
+          # SSLをTLSv1方式にする
+          context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
           try:
                request_data = urllib.request.Request(
                     self.create_url(),
                     self.create_body().encode(),
                     self.create_header(),
                     )
-               with urllib.request.urlopen(request_data) as response_data:
+               with urllib.request.urlopen(request_data,context=context) as response_data:
                     response = response_data.read().decode()
 
                     # 2-5-4で使用するAPIレスポンスの加工処理
