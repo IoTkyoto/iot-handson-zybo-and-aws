@@ -20,4 +20,4 @@ if __name__ == "__main__":
     # 認証ログデータ加工のテスト用
     test_call_format_auth_log_data()
     # 顔画像分析データ加工のテスト用
-    # test_call_format_analysis_log_data()
+    test_call_format_analysis_log_data()
