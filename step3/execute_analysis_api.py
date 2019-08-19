@@ -7,7 +7,7 @@ Rekognitionで顔の分析をするAPIにアクセスするコード
 import sys
 import urllib.request
 import json
-import rekognition_data_formatter
+# import rekognition_data_formatter
 
 # このファイルを実行時に受け取る引数
 ARGS = sys.argv
