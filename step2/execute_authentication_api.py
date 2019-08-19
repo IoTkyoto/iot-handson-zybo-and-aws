@@ -84,7 +84,7 @@ class Api():
 
      # def write_log(self, format_result, format_data):
      #      with open('create_auth_log.log', 'w') as f:
-     #      f.write(str(format_result) + ',\n' + json.dumps(format_data))
+     #           f.write(str(format_result) + ',\n' + json.dumps(format_data))
 
      def post_request(self):
           """
