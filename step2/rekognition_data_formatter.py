@@ -7,9 +7,9 @@ import sys
 import json
 
 def format_auth_log_data(ARGS_DATA, ARGS_AUTH_PICTURE_NAME):
-     """
-        顔認証APIのレスポンスを分かりやすい形にフォーマットする
-     """
+    """
+    顔認証APIのレスポンスを分かりやすい形にフォーマットする
+    """
     try:
         auth_log_data = []
         auth_result = None
@@ -34,13 +34,14 @@ def format_auth_log_data(ARGS_DATA, ARGS_AUTH_PICTURE_NAME):
             auth_result = False
         return auth_result, auth_log_data
     except Exception as error:
+        print(error)
         return False, []
 
 
 def format_analysis_log_data(ARGS_DATA):
-     """
-        顔分析APIのレスポンスを分かりやすい形にフォーマットする
-     """
+    """
+    顔分析APIのレスポンスを分かりやすい形にフォーマットする
+    """
     try:
         rekognition_data = []
         ARGS_DATA = json.loads(ARGS_DATA)
@@ -60,4 +61,5 @@ def format_analysis_log_data(ARGS_DATA):
             })
         return rekognition_data
     except Exception as error:
+        print(error)
         return []
