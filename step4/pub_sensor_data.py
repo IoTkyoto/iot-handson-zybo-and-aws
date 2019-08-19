@@ -25,7 +25,8 @@ class PubSensorData():
         sensor_data_json = {
                                 "DeviceID": "id001",
                                 "Datetime": timestamp,
-                                "Value": int(self.arg_sensor_data)
+                                "Value": self.arg_sensor_data
+                                #"Value": int(self.arg_sensor_data)
                             }
         return json.dumps(sensor_data_json)
 
