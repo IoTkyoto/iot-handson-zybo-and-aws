@@ -7,7 +7,10 @@ Rekognitionで顔の分析をするAPIにアクセスするコード
 import sys
 import urllib.request
 import json
+import ssl #認証方法をTLSv1に指定
 # import rekognition_data_formatter
+import subprocess
+
 
 # このファイルを実行時に受け取る引数
 ARGS = sys.argv
@@ -23,7 +26,7 @@ RESOURCE = 'xxxxxx'
 BASE_URL = 'https://{api_id}.execute-api.ap-northeast-1.amazonaws.com/{stage}/{resource}'
 
 # step4で作成するログ送信用プログラムのパス
-PUB_ANALYSIS_LOG_PATH = '../step4/pub_analysis_log_data.py'
+# PUB_ANALYSIS_LOG_PATH = '../step4/pub_analysis_log_data.py'
 
 class Api():
      def __init__(self):
@@ -74,13 +77,15 @@ class Api():
           """
           urllib.requestモジュールで指定のURLにデータをPOSTする
           """
+          # SSLをTLSv1方式にする
+          context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
           try:
                request_data = urllib.request.Request(
                     self.create_url(),
                     self.create_body().encode(),
                     self.create_header(),
                     )
-               with urllib.request.urlopen(request_data) as response_data:
+               with urllib.request.urlopen(request_data,context=context) as response_data:
                     response = response_data.read().decode()
 
                     # 3-6で使用するAPIレスポンスの加工処理
