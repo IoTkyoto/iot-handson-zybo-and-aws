@@ -90,11 +90,11 @@ class Api():
 
                     # 3-6で使用するAPIレスポンスの加工処理
                     # response_json = json.loads(response)
-                    # format_result, format_data = rekognition_data_formatter.format_analysis_log_data(json.dumps(response_json['payloads']))
+                    # format_data = rekognition_data_formatter.format_analysis_log_data(json.dumps(response_json['payloads']))
                     
                     # step4の関数を呼び出す処理
                     # if format_data != []:
-                    #      call_pub_analysis_log_data(format_data)
+                    #      self.call_pub_analysis_log_data(format_data)
           except Exception as error:
                response = '[FAILED]{}'.format(error)
           finally:
