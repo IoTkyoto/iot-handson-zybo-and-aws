@@ -14,7 +14,7 @@ def format_auth_log_data(ARGS_DATA, ARGS_AUTH_PICTURE_NAME):
         auth_log_data = []
         auth_result = None
         ARGS_DATA = json.loads(ARGS_DATA)
-        if 'FaceMatches' in ARGS_DATA:
+        if ARGS_DATA['FaceMatches'] != []:
             for data in ARGS_DATA['FaceMatches']:
                 auth_log_data.append({
                     "DeviceID": "id001",
