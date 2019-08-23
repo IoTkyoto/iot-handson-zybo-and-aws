@@ -71,7 +71,7 @@ class Api():
 
      # def call_pub_analysis_log_data(self, format_data):
      #      for data in format_data:
-     #           subprocess.call(["python", PUB_ANALYSIS_LOG_PATH, json.dumps(data)])
+     #           subprocess.call(["python3", PUB_ANALYSIS_LOG_PATH, json.dumps(data)])
 
      def post_request(self):
           """
