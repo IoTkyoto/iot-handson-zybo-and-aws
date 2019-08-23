@@ -80,7 +80,7 @@ class Api():
      
      # def call_pub_auth_log_data(self, format_data):
      #      for data in format_data:
-     #           subprocess.call(["python", PUB_AUTH_LOG_PATH, json.dumps(data)])
+     #           subprocess.call(["python3", PUB_AUTH_LOG_PATH, json.dumps(data)])
 
      # def write_log(self, format_result, format_data):
      #      with open('create_auth_log.log', 'w') as f:
