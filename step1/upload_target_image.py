@@ -87,10 +87,10 @@ if __name__ == '__main__':
     relation_s3.upload()
 
     # ステップ2で構築するプログラムをcallする
-    # subprocess.call(["python", EXECUTE_AUTHENTICATION_PATH, relation_s3.filename, args[2], '60'])
+    # subprocess.call(["python3", EXECUTE_AUTHENTICATION_PATH, relation_s3.filename, args[2], '60'])
 
     # ステップ3で構築するプログラムをcallする
-    # subprocess.call(["python", EXECUTE_ANALYSIS_PATH, relation_s3.filename, args[2]])
+    # subprocess.call(["python3", EXECUTE_ANALYSIS_PATH, relation_s3.filename, args[2]])
 
     # メモリ解放
     del relation_s3
